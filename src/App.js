@@ -1,20 +1,31 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as firebase from 'firebase'
 
 class App extends Component {
+  state = {
+    challenges: {}
+  }
+
+  componentWillMount() {
+  }
+
+  componentDidMount() {
+    console.log('component Did mount!')
+    firebase.database().ref('/challenges').on('value', (snapshot) => {
+      console.log('recieved snapshot!')
+      const challenges = snapshot.val()
+      this.setState({ challenges: challenges })
+    })
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+      <div>{
+        Object.values(this.state.challenges).map((challenge) => (
+          <li>{challenge}</li>
+        ))
+      }</div>
+    )
   }
 }
 
