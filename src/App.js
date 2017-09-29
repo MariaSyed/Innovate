@@ -1,30 +1,16 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase'
+import AppBar from 'material-ui/AppBar';
 
 class App extends Component {
-  state = {
-    challenges: {}
-  }
-
-  componentWillMount() {
-  }
-
-  componentDidMount() {
-    console.log('component Did mount!')
-    firebase.database().ref('/challenges').on('value', (snapshot) => {
-      console.log('recieved snapshot!')
-      const challenges = snapshot.val()
-      this.setState({ challenges: challenges })
-    })
-  }
-
   render() {
     return (
-      <div>{
-        Object.values(this.state.challenges).map((challenge) => (
-          <li>{challenge}</li>
-        ))
-      }</div>
+      <div>
+        <AppBar
+          title="Title"
+          iconClassNameRight="muidocs-icon-navigation-expand-more"
+        />
+      </div>
     )
   }
 }

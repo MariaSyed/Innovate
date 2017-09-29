@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import * as firebase from 'firebase'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
@@ -15,5 +16,9 @@ const config = {
 }
 firebase.initializeApp(config)
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(
+  <MuiThemeProvider>
+    <App />
+  </MuiThemeProvider>
+  , document.getElementById('root'))
 registerServiceWorker()
