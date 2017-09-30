@@ -21,33 +21,43 @@ const items = [
   <MenuItem key={4} value={'other'} primaryText="Other" />,
 ]
 
-const roles = [
-  {
-    id: 'catering',
+const roles = {
+  role1: {
+    id: 'role1',
     title: 'Catering',
-    description: 'bla bl alb al'
+    description: ''
   },
-  {
-    id: 'icebreaker',
-    title: 'Ice-Breaker',
-    description: 'bla bl alb al'
-  },
-  {
-    id: 'speakers',
+  role2: {
+    id: 'role2',
     title: 'Speakers',
-    description: 'bla bl alb al'
+    description: ''
   },
-  {
-    id: 'funding',
+  role3: {
+    id: 'role3',
     title: 'Funding',
-    description: 'bla bl alb al'
+    description: ''
   },
-  {
-    id: 'marketting',
+  role4: {
+    id: 'role4',
     title: 'Marketting',
-    description: 'bla bl alb al'
+    description: ''
   },
-]
+  role5: {
+    id: 'role5',
+    title: 'Activities',
+    description: ''
+  },
+  role6: {
+    id: 'role6',
+    title: 'Judges & Mentors',
+    description: ''
+  },
+  role7: {
+    id: 'role7',
+    title: 'Location Planning',
+    description: ''
+  },
+}
 
 class CreateChallengeForm extends Component {
   state = {
@@ -82,11 +92,6 @@ class CreateChallengeForm extends Component {
 
   handleOnSubmit() {
     this.setState({ loading: true })
-    // const filteredRoleIds = Object.keys(this.state.roles).reduce((p, c) => {
-    //   if (this.state.roles[c]) p.push(c);
-    //   return p;
-    // }, [])
-    // const filteredRoles = roles.filter((role) => filteredRoleIds.indexOf(role.id) > -1 )
     console.log('this is state', this.state)
     const newChallenge = {
       creator: this.state.name,
@@ -95,19 +100,13 @@ class CreateChallengeForm extends Component {
       description: this.state.description,
       category: this.state.category,
       votes: 0,
+      roles: roles
     }
     const pushKey = firebase.database().ref('/challenges').push()
     pushKey.set(newChallenge).then(() => {
       this.setState({ loading: false, redirect: true })
     })
   }
-
-  // updateCheck(roleId) {
-  //  this.setState((oldState) => {
-  //    oldState.roles[roleId] = !oldState.roles[roleId]
-  //    return oldState
-  //  })
-  // }
 
   render() {
     const { redirect } = this.state;
@@ -164,17 +163,6 @@ class CreateChallengeForm extends Component {
           {items}
         </SelectField>
         <br />
-        {/* {
-          Object.values(roles).map((role, index) => (
-            <Checkbox
-              key={index}
-              style={{ marginBottom: 10 }}
-              label={role.title + ' - ' + role.description}
-              checked={this.state.roles[role.id]}
-              onCheck={() => this.updateCheck(role.id)}
-            />
-          ))
-        } */}
         <RaisedButton style={{ marginTop: 20 }} disabled={this.state.loading} label="Submit" primary={true} onClick={this.handleOnSubmit.bind(this)}/>
         </Paper>
       </div>

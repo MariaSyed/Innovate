@@ -4,14 +4,18 @@ import Home from './HomeContainer'
 import Challenges from './ChallengesContainer'
 import CreateChallengeForm from './CreateChallengeForm'
 import ChallengeDetails from './ChallengeDetailsContainer'
+import OrganiseContainer from './OrganiseContainer'
+import LocationBookingContainer from './LocationBookingContainer'
 
 const Navigator = () => (
   <Router>
     <div>
       <Route exact path="/" component={Home}/>
-      <Route path="/challenges" component={Challenges}/>
-      <Route path="/post-challenge" component={CreateChallengeForm} />
-      <Route path="/challenge/:id" component={ChallengeDetails} />
+      <Route exact path="/challenges" component={Challenges}/>
+      <Route exact path="/post-challenge" component={CreateChallengeForm} />
+      <Route exact path="/challenge/:id" component={ChallengeDetails} />
+      <Route exact path="/organise/:id" component={OrganiseContainer} />
+      <Route exact path="/organise/:id/location" component={LocationBookingContainer} />
     </div>
   </Router>
 )

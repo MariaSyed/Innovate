@@ -18,13 +18,29 @@ const styles = {
     backgroundColor: '#38c098',
     color: 'white',
     fontFamily: 'Raleway',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    fontSize: 16
+  },
+  dButton: {
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginRight: 10,
+    borderRadius: 28,
+    textDecoration: 'none',
+    border:'1px solid transparent',
+    backgroundColor: '#38c098',
+    color: 'white',
+    fontFamily: 'Raleway',
+    fontSize: 16,
+    opacity: 0.5
   },
   challengeTitle: {
     cursor: 'pointer',
     fontFamily: 'Raleway',
     textAlign: 'center',
-    fontSize: 25, 
+    fontSize: 25,
     color: '#38c098'
   }
 }

@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import * as firebase from 'firebase'
 import NavBar from '../components/NavBar'
 import { Grid, Row, Col, Popover, Overlay, OverlayTrigger, ButtonToolbar } from 'react-bootstrap'
+import JoinStakeholderDialog from '../components/JoinStakeholderDialog'
+import bStyles from '../styles/ChallengesContainerStyles'
 
+// this.props.match.params.id is the push key from firebase
 const stakeholders = [
   {
     id: '0001',
@@ -31,7 +34,8 @@ const popover = (
 class ChallengeDetailsContainer extends Component {
   state = {
     challenge: {},
-    show: null
+    show: null,
+    openDialog: false
   }
 
   componentWillMount() {
@@ -50,11 +54,21 @@ class ChallengeDetailsContainer extends Component {
     this.setState({ target: e.target, show: e.target.id });
   }
 
+  handleOpenDialog = () => {
+    console.log('open dialog')
+    this.setState({ openDialog: true })
+  }
+
   render() {
     const { challenge } = this.state
     return (
       <div>
         <NavBar />
+        <JoinStakeholderDialog
+          open={this.state.openDialog}
+          handleClose={() => this.setState({ openDialog: false })}
+          pushKey={this.props.match.params.id}
+        />
         <Grid style={{ width: '99%'}}>
           <Row className="show-grid">
             <Col md={6} style={styles.titleContainer}>
@@ -64,10 +78,12 @@ class ChallengeDetailsContainer extends Component {
                 <div style={{ height: '80vh' }}>
                   <p style={styles.descriptionText}>{challenge.description}</p>
                   <div style={{ position: 'relative', bottom: 0, textAlign: 'center', marginTop: 40, marginLeft: 'auto', marginRight: 'auto'}}>
-                    <button style={styles.button}>Organise</button>
-                    <button style={styles.button} onClick={() => this.handleOnVote(this.props.match.params.id, challenge.votes)}><i class="material-icons">thumb_up</i> ( {challenge.votes} ) </button>
-                    <button style={styles.button}>Participate</button>
-                    <button style={styles.button}>Mentor</button>
+                    <button style={bStyles.button}>Organise</button>
+                    <button style={bStyles.button} onClick={() => this.handleOnVote(this.props.match.params.id, challenge.votes)}>
+                      <i className="material-icons" style={{ fontSize: 16 }}>thumb_up</i> ( {challenge.votes} )
+                    </button>
+                    <button style={bStyles.dButton}>Participate</button>
+                    <button style={bStyles.dButton}>Mentor</button>
                   </div>
                 </div>
             </Col>
@@ -79,25 +95,34 @@ class ChallengeDetailsContainer extends Component {
                 {
                   challenge.stakeholders
                     ?
-                      challenge.stakeholders.map((stakeholder) => (
+                      Object.values(challenge.stakeholders).map((stakeholder) => (
                         <div>
                           <p id={stakeholder.id} style={{ fontFamily: 'Avenir', fontSize: 20,color: 'white', textAlign: 'center' }}>
-                            <i id={stakeholder.id} style={{ fontSize: 40, color: 'white', paddingRight: 20 }} class="material-icons">account_circle</i>
+                            <i id={stakeholder.id} style={{ fontSize: 40, color: 'white', paddingRight: 20 }} className="material-icons">account_circle</i>
                             {stakeholder.name}
+                            {
+                              stakeholder.facebook &&
+                              <a href={stakeholder.facebook} target="_blank">
+                                <img src='https://facebookbrand.com/wp-content/themes/fb-branding/prj-fb-branding/assets/images/fb-art.png' height="25" width="25" style={{ marginLeft: 20 }}/>
+                              </a>
+                            }
                           </p>
-                          <p style={{ fontFamily: 'Avenir', fontStyle: 'italic', fontSize: 17, color: 'white', textAlign: 'center'}}>{stakeholder.comment}</p>
+                          <p style={{ fontFamily: 'Avenir', fontStyle: 'italic', fontSize: 17, color: 'white', textAlign: 'center'}}>{stakeholder.comments}</p>
                         </div>
                       ))
 
                     : <p style={{ fontFamily: 'Avenir', fontSize: 20,color: 'white', textAlign: 'center' }}>None yet :( Join!</p>
                 }
+                <div style={{ width: '60%', marginLeft: 'auto', marginRight: 'auto' }}>
+                  <button onClick={() => this.handleOpenDialog()} style={styles.stakeholderButton}>Join as a stakeholder</button>
+                </div>
               </div>
             </Col>
             <Col md={4} style={{ backgroundColor: '#5e636d' }}>
               <div>
                 <p style={styles.bottomTitle}>SECTOR</p>
                 <div style={{ width: 100, marginLeft:'auto', marginRight: 'auto'}} >
-                  <i style={{ textAlign: 'center', fontSize: 100, color: 'rgb(156,208,202)' }} class="material-icons">lightbulb_outline</i>
+                  <i style={{ textAlign: 'center', fontSize: 100, color: 'rgb(156,208,202)' }} className="material-icons">lightbulb_outline</i>
                 </div>
                 <p style={{ fontSize: 30, fontFamily: 'Avenir', letterSpacing: 5, textAlign: 'center', color: 'white'}}>{challenge.category && challenge.category.toUpperCase()}</p>
               </div>
@@ -144,21 +169,6 @@ const styles = {
     lineHeight: 1.5,
     fontSize: 17
   },
-  button: {
-    paddingLeft: 30,
-    paddingRight: 30,
-    paddingTop: 10,
-    paddingBottom: 10,
-    marginRight: 10,
-    borderRadius: 28,
-    fontSize: 18,
-    textDecoration: 'none',
-    border:'1px solid transparent',
-    backgroundColor: '#38c098',
-    color: 'white',
-    fontFamily: 'Raleway',
-    cursor: 'pointer'
-  },
   bottomTitle: {
     textAlign: 'center',
     fontSize: 30,
@@ -174,6 +184,23 @@ const styles = {
     fontWeight: '900',
     fontFamily: 'Avenir',
     color: 'black'
+  },
+  stakeholderButton: {
+    fontSize: 18,
+    backgroundColor: '#38c098',
+    textDecoration: 'none',
+    paddingLeft: 50,
+    paddingRight: 50,
+    paddingTop: 30,
+    paddingTop: 20,
+    paddingBottom: 20,
+    color: 'white',
+    fontFamily: 'Avenir',
+    border:'1px solid transparent',
+    cursor: 'pointer',
+    marginTop: 20,
+    fontSize: 18,
+    marginBottom: 20
   }
 }
 

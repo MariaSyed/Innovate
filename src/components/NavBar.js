@@ -5,7 +5,7 @@ const NavBar = ({ title }) => {
   return (
     <div style={{ width: '100%'}}>
       <div style={styles.titleContainer}>
-        <p style={styles.title}>INNOV8</p>
+        <img src={require('../assets/logo.JPG')} height="80px"/>
       </div>
       <div style={styles.linksContainer}>
         <Link to='/' style={styles.link}>Home</Link>
@@ -24,7 +24,7 @@ const NavBar = ({ title }) => {
 
 const styles = {
   titleContainer: {
-    textAlign: 'center'
+    textAlign: 'left'
   },
   title: {
     fontSize: 30,
@@ -51,7 +51,7 @@ const styles = {
     textAlign: 'center',
     fontFamily: 'Raleway',
     textDecoration: 'none',
-    fontSize: 14
+    fontSize: 18
   }
 }
 
