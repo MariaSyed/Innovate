@@ -4,33 +4,38 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 
 const roomTypes = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
+  'Sound-proof room',
+  'Cafeteria space',
+  'Outdoor space',
+  'Small classroom',
+  'Large auditorium',
+  'Meeting room'
 ];
+
+const equipments = [
+  'Projector',
+  'Desks & Chairs',
+  'Whiteboard',
+  'Blackboard',
+  'Computers'
+]
 
 class LocationBookingContainer extends Component {
   state = {
-    values: [],
+    roomTypes: [],
+    equipments: []
   };
 
-  handleChange = (event, index, values) => this.setState({values});
+  handleChange = (event, index, values) => this.setState({ [event.target.name]: values});
 
-  menuItems(values) {
-    return roomTypes.map((roomType) => (
+  menuItems(values, items) {
+    return items.map((item) => (
       <MenuItem
-        key={roomType}
+        key={item}
         insetChildren={true}
-        checked={values && values.indexOf(roomType) > -1}
-        value={roomType}
-        primaryText={roomType}
+        checked={values && values.indexOf(item) > -1}
+        value={item}
+        primaryText={item}
       />
     ));
   }
@@ -39,14 +44,24 @@ class LocationBookingContainer extends Component {
     return (
       <div>
         <NavBar title='Book a Space'/>
-          <SelectField
+        <SelectField
           multiple={true}
           hintText="Select a name"
-          value={this.state.values}
+          value={this.state.roomTypes}
           onChange={this.handleChange}
+          name='roomTypes'
         >
-        {this.menuItems(this.state.values)}
+        {this.menuItems(this.state.roomTypes, roomTypes)}
       </SelectField>
+      <SelectField
+        multiple={true}
+        hintText="Select a name"
+        value={this.state.equipments}
+        onChange={this.handleChange}
+        name='equipments'
+      >
+      {this.menuItems(this.state.equipments, equipments)}
+    </SelectField>
       </div>
     )
   }
