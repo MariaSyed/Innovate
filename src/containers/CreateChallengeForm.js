@@ -14,8 +14,11 @@ import LinearProgress from 'material-ui/LinearProgress';
 const items = [
   <MenuItem key={1} value={'health'} primaryText="Health" />,
   <MenuItem key={2} value={'technology'} primaryText="Technology" />,
-  <MenuItem key={3} value={'education'} primaryText="Education" />,
-  <MenuItem key={4} value={'skill'} primaryText="Skill" />,
+  <MenuItem key={3} value={'ed-tech'} primaryText="Ed-Tech" />,
+  <MenuItem key={4} value={'art'} primaryText="Art" />,
+  <MenuItem key={4} value={'environment'} primaryText="Environment" />,
+  <MenuItem key={4} value={'social'} primaryText="Social" />,
+  <MenuItem key={4} value={'other'} primaryText="Other" />,
 ]
 
 const roles = [
@@ -50,16 +53,11 @@ class CreateChallengeForm extends Component {
   state = {
     redirect: false,
     loading: false,
+    name: '',
+    email: '',
     title: '',
     description: '',
-    category: null,
-    roles: {
-      catering: false,
-      iceBreaker: false,
-      speakers: false,
-      funding: false,
-      marketting: false
-    }
+    category: null
   }
 
   handleCategoryChange = (event, index, value) => this.setState({ category: value })
@@ -76,19 +74,27 @@ class CreateChallengeForm extends Component {
     });
   };
 
+  handleTextChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
   handleOnSubmit() {
     this.setState({ loading: true })
-    const filteredRoleIds = Object.keys(this.state.roles).reduce((p, c) => {
-      if (this.state.roles[c]) p.push(c);
-      return p;
-    }, [])
-    const filteredRoles = roles.filter((role) => filteredRoleIds.indexOf(role.id) > -1 )
+    // const filteredRoleIds = Object.keys(this.state.roles).reduce((p, c) => {
+    //   if (this.state.roles[c]) p.push(c);
+    //   return p;
+    // }, [])
+    // const filteredRoles = roles.filter((role) => filteredRoleIds.indexOf(role.id) > -1 )
+    console.log('this is state', this.state)
     const newChallenge = {
+      creator: this.state.name,
+      email: this.state.email,
       title: this.state.title,
       description: this.state.description,
-      vacantRoles: filteredRoles,
+      category: this.state.category,
       votes: 0,
-      creator: 'mariauid',
     }
     const pushKey = firebase.database().ref('/challenges').push()
     pushKey.set(newChallenge).then(() => {
@@ -96,12 +102,12 @@ class CreateChallengeForm extends Component {
     })
   }
 
-  updateCheck(roleId) {
-   this.setState((oldState) => {
-     oldState.roles[roleId] = !oldState.roles[roleId]
-     return oldState
-   })
-  }
+  // updateCheck(roleId) {
+  //  this.setState((oldState) => {
+  //    oldState.roles[roleId] = !oldState.roles[roleId]
+  //    return oldState
+  //  })
+  // }
 
   render() {
     const { redirect } = this.state;
@@ -112,26 +118,42 @@ class CreateChallengeForm extends Component {
 
     return (
       <div>
-        <NavBar />
-        <Paper style={{ width: '40%', marginLeft: 'auto', marginRight: 'auto', padding: 20, marginTop: 50 }}>
+        <NavBar title='Post your challenge'/>
+        <Paper style={{ width: '50%', marginLeft: 'auto', marginRight: 'auto', padding: 20, marginTop: 50 }}>
         {
           this.state.loading &&
           <LinearProgress mode="indeterminate"/>
         }
-        <p style={{ fontFamily: 'Raleway', fontSize: 25, fontWeight: '500'}}>Create a Challenge</p>
+        {/* <p style={{ fontFamily: 'Raleway', fontSize: 25, fontWeight: '500'}}>Create a Challenge</p> */}
+        <TextField
+          style={{ marginTop: 10, width: '60%' }}
+          hintText="Name"
+          name="name"
+          value={this.state.name}
+          onChange={this.handleTextChange}
+        /><br />
+        <TextField
+          style={{ marginTop: 10, width: '60%' }}
+          hintText="Email"
+          name="email"
+          value={this.state.email}
+          onChange={this.handleTextChange}
+        /><br />
         <TextField
           style={{ marginTop: 10, width: '60%' }}
           hintText="Title"
+          name="title"
           value={this.state.title}
-          onChange={this.handleTitleChange}
+          onChange={this.handleTextChange}
         /><br />
         <TextField
           style={{ marginTop: 10, width: '60%' }}
           hintText="Description"
+          name="description"
           multiLine={true}
           rows={5}
           value={this.state.description}
-          onChange={this.handleDescriptionChange}
+          onChange={this.handleTextChange}
         /><br />
         <SelectField
           style={{ marginTop: 10, width: '60%' }}
@@ -141,8 +163,8 @@ class CreateChallengeForm extends Component {
         >
           {items}
         </SelectField>
-        <p>Select roles needed</p>
-        {
+        <br />
+        {/* {
           Object.values(roles).map((role, index) => (
             <Checkbox
               key={index}
@@ -152,7 +174,7 @@ class CreateChallengeForm extends Component {
               onCheck={() => this.updateCheck(role.id)}
             />
           ))
-        }
+        } */}
         <RaisedButton style={{ marginTop: 20 }} disabled={this.state.loading} label="Submit" primary={true} onClick={this.handleOnSubmit.bind(this)}/>
         </Paper>
       </div>

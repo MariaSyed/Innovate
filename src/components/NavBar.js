@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const NavBar = () => {
+const NavBar = ({ title }) => {
   return (
-    <div>
+    <div style={{ width: '100%'}}>
       <div style={styles.titleContainer}>
         <p style={styles.title}>INNOV8</p>
       </div>
@@ -11,6 +11,12 @@ const NavBar = () => {
         <Link to='/' style={styles.link}>Home</Link>
         <Link to='/challenges' style={styles.link}>Challenges</Link>
         <Link to='/post-challenge' style={styles.link}>Post Your Challenge</Link>
+        {
+          title &&
+          <div>
+            <p style={styles.pageTitle}>{title}</p>
+          </div>
+        }
       </div>
     </div>
   )
@@ -26,6 +32,13 @@ const styles = {
     fontWeight: '800',
     color: '#42484f'
   },
+  pageTitle: {
+    color: 'white',
+    fontSize: 55,
+    fontFamily: 'Raleway',
+    paddingTop: 30,
+    paddingBottom: 30
+  },
   linksContainer: {
     backgroundColor: '#42484f',
     paddingTop: 20,
@@ -34,10 +47,11 @@ const styles = {
   },
   link: {
     color: 'white',
-    paddingLeft: 10,
+    paddingLeft: 50,
     textAlign: 'center',
     fontFamily: 'Raleway',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    fontSize: 14
   }
 }
 
