@@ -82,7 +82,7 @@ class ChallengeDetailsContainer extends Component {
             <Col md={6} style={styles.titleContainer}>
               <strong><p style={styles.titleText}>{challenge.title}</p></strong>
             </Col>
-            <Col md={6} style={{ backgroundColor: '#5e636d' }}>
+            <Col md={6} style={{ backgroundColor: '#5e636d', width: '100%' }}>
                 <div style={{ height: '80vh' }}>
                   <p style={styles.descriptionText}>{challenge.description}</p>
                   <div style={{ position: 'relative', bottom: 0, textAlign: 'center', marginTop: 40, marginLeft: 'auto', marginRight: 'auto'}}>
@@ -103,7 +103,7 @@ class ChallengeDetailsContainer extends Component {
             </Col>
           </Row>
           <Row className="show-grid">
-            <Col md={4} style={{ backgroundColor: 'black' }}>
+            <Col md={4} style={{ backgroundColor: 'black', width: '100%' }}>
               <div>
                 <p style={styles.bottomTitle}>STAKEHOLDERS</p>
                 <p style={styles.bottomSubtitle}><i>People who could benefit from solutions to this challenge</i></p>
@@ -134,7 +134,7 @@ class ChallengeDetailsContainer extends Component {
                 </div>
               </div>
             </Col>
-            <Col md={4} style={{ backgroundColor: '#5e636d' }}>
+            <Col md={4} style={{ backgroundColor: '#5e636d', width: '100%' }}>
               <div>
                 <p style={styles.bottomTitle}>SECTOR</p>
                 <div style={{ width: 100, marginLeft:'auto', marginRight: 'auto'}} >

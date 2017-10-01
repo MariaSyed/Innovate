@@ -11,8 +11,8 @@ import Paper from 'material-ui/Paper'
 
 class OrganiseContainer extends Component {
   state = {
-    name: 'Zuena Mgiva',
-    email: 'zuena.mgiva@gmail.com',
+    name: '',
+    email: '',
     rolesChecked: {},
     roles: [],
     redirectTo: null
