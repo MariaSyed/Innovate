@@ -56,7 +56,7 @@ const styles = {
   carouselDiv: {
     width: '100%',
     height: '70vh',
-    backgroundColor: 'grey',
+    backgroundColor: '#38c098',
     paddingTop: '20vh'
   },
   centeredDiv: {

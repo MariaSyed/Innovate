@@ -48,7 +48,7 @@ class OrganiseContainer extends Component {
     const roleObj = Object.keys(this.state.rolesChecked).reduce((p, c) => {
       if (this.state.rolesChecked[c]) {
         p[c] = this.state.roles[c]
-        p[c]['organiser'] = { organiser: { name: this.state.name, email: this.state.email } }
+        p[c]['organiser'] = { name: this.state.name, email: this.state.email }
       }
       return p
     }, {})
@@ -103,7 +103,13 @@ class OrganiseContainer extends Component {
             }
           })
         }
-        <RaisedButton backgroundColor='#38c098' labelColor='#fff' style={{ marginTop: 40 }} label="Next" onClick={this.handleOnSubmit.bind(this)} />
+        <RaisedButton
+          backgroundColor='#38c098'
+          labelColor='#fff'
+          style={{ marginTop: 40 }}
+          label="Next"
+          onClick={this.handleOnSubmit.bind(this)}
+        />
       </Paper>
       </div>
     )

@@ -1,41 +1,19 @@
 import React, { Component } from 'react'
 import * as firebase from 'firebase'
+import { Link, Redirect } from 'react-router-dom'
 import NavBar from '../components/NavBar'
-import { Grid, Row, Col, Popover, Overlay, OverlayTrigger, ButtonToolbar } from 'react-bootstrap'
+import { Grid, Row, Col } from 'react-bootstrap'
 import JoinStakeholderDialog from '../components/JoinStakeholderDialog'
 import bStyles from '../styles/ChallengesContainerStyles'
 
 // this.props.match.params.id is the push key from firebase
-const stakeholders = [
-  {
-    id: '0001',
-    name: 'Tery Mccginnis',
-    comment: 'I belive in science',
-    facebook: 'www.facebook.com/wix',
-    twitter: 'www.twitter.com/wix'
-  },
-  {
-    id: '0002',
-    name: 'Tery Mccginnis',
-    comment: 'I belive in science too',
-    facebook: 'www.facebook.com/wix',
-    twitter: 'www.twitter.com/wix'
-  }
-]
-
-const popover = (
-  <Popover id="popover-trigger-hover-focus" title="Popover bottom">
-    <div className='container-fluid'>
-    <strong>Holy guacamole!</strong> Check this info.
-    </div>
-  </Popover>
-)
 
 class ChallengeDetailsContainer extends Component {
   state = {
     challenge: {},
     show: null,
-    openDialog: false
+    openDialog: false,
+    redirectTo: null
   }
 
   componentWillMount() {
@@ -59,8 +37,22 @@ class ChallengeDetailsContainer extends Component {
     this.setState({ openDialog: true })
   }
 
+  getNumberOfRolesTaken = (roles) => {
+    const takenRoles = roles.filter((role) => role.organiser)
+    return takenRoles.length
+  }
+
+  areAllRolesTaken = (roles) => {
+    const numberOfRoles = this.getNumberOfRolesTaken(roles)
+    return !(numberOfRoles >= 7)
+  }
+
   render() {
-    const { challenge } = this.state
+    const { challenge, redirectTo } = this.state
+    const allRolesTaken = challenge.roles && this.areAllRolesTaken(Object.values(challenge.roles))
+    if (redirectTo) {
+      return <Redirect to={redirectTo} />
+    }
     return (
       <div>
         <NavBar />
@@ -78,12 +70,18 @@ class ChallengeDetailsContainer extends Component {
                 <div style={{ height: '80vh' }}>
                   <p style={styles.descriptionText}>{challenge.description}</p>
                   <div style={{ position: 'relative', bottom: 0, textAlign: 'center', marginTop: 40, marginLeft: 'auto', marginRight: 'auto'}}>
-                    <button style={bStyles.button}>Organise</button>
+                    <button
+                      style={bStyles.button}
+                      onClick={() => this.setState({ redirectTo: '/organise/' + this.props.match.params.id })}
+                      style={allRolesTaken ? bStyles.button : bStyles.dButton} disabled={!allRolesTaken}
+                    >
+                      Organise  {challenge.roles ? this.getNumberOfRolesTaken(Object.values(challenge.roles)) : 0} / 7
+                    </button>
                     <button style={bStyles.button} onClick={() => this.handleOnVote(this.props.match.params.id, challenge.votes)}>
                       <i className="material-icons" style={{ fontSize: 16 }}>thumb_up</i> ( {challenge.votes} )
                     </button>
-                    <button style={bStyles.dButton}>Participate</button>
-                    <button style={bStyles.dButton}>Mentor</button>
+                    <button style={allRolesTaken ? bStyles.dButton : bStyles.button} disabled={allRolesTaken}>Participate</button>
+                    <button style={allRolesTaken ? bStyles.dButton : bStyles.button} disabled={allRolesTaken}>Mentor</button>
                   </div>
                 </div>
             </Col>
@@ -129,7 +127,25 @@ class ChallengeDetailsContainer extends Component {
             </Col>
             <Col md={4} style={{ backgroundColor: '#38c098' }}>
               <div>
-                <p style={styles.tellUsTitle}>TELL US</p>
+                <p style={styles.tellUsTitle}>Organizers</p>
+                <div style={styles.organizerContainer}>
+                {
+                  challenge.roles &&
+                    Object.values(challenge.roles).map((role) => {
+                      return (
+                        <p key={role.id} style={styles.organizers}>
+                          <span style={{ fontSize: 20 }}><strong>{role.title}</strong></span>  -
+                          {
+                            role.organiser
+                              ? '  ' + role.organiser.name + ' , ' + role.organiser.email
+                              : <i>   None yet, <Link to={'/organise/' + this.props.match.params.id}>organise!</Link></i>
+                          }
+                        </p>
+                      )
+
+                    })
+                }
+              </div>
               </div>
             </Col>
           </Row>
@@ -201,6 +217,15 @@ const styles = {
     marginTop: 20,
     fontSize: 18,
     marginBottom: 20
+  },
+  organizers: {
+    fontFamily: 'Avenir',
+    color: 'white',
+    fontSize: 18
+  },
+  organizerContainer: {
+    paddingLeft: 100,
+    paddingTop: 5
   }
 }
 

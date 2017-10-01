@@ -34,6 +34,11 @@ class About extends Component {
     return takenRoles.length
   }
 
+  areAllRolesTaken = (roles) => {
+    const numberOfRoles = this.getNumberOfRolesTaken(roles)
+    return !(numberOfRoles >= 7)
+  }
+
   render() {
     if (this.state.redirectTo) {
       return <Redirect to={this.state.redirectTo}  />
@@ -47,6 +52,7 @@ class About extends Component {
             {
               Object.keys(this.state.challenges).map((key) => {
                 const challenge = this.state.challenges[key]
+                const allRolesTaken = this.areAllRolesTaken(Object.values(challenge.roles))
                 return (
                   <Col xs={6} style={{ marginTop: 20 }} key={key}>
                     <div style={{ margin: 5 }}>
@@ -54,14 +60,20 @@ class About extends Component {
                         <p style={styles.challengeTitle}>{challenge.title}</p>
                       </div>
                       <p style={styles.description}>{challenge.description}</p>
+
                       <div style={{ textAlign: 'center', marginTop: 40, marginLeft: 'auto', marginRight: 'auto'}}>
-                        <button style={styles.button} onClick={() => this.handleOnOrganise(key)}>
+                        <button
+                          style={allRolesTaken ? styles.button : styles.dButton}
+                          onClick={() => this.handleOnOrganise(key)}
+                          disabled={!allRolesTaken}
+                        >
                           Organise {this.getNumberOfRolesTaken(Object.values(challenge.roles))} / 7
                         </button>
                         <button style={styles.button} onClick={() => this.handleOnVote(key, challenge.votes)}>Votes {challenge.votes}</button>
-                        <button style={styles.dButton} disabled>Participate</button>
-                        <button style={styles.dButton} disabled>Mentor</button>
+                        <button style={allRolesTaken ? styles.dButton : styles.button} disabled={allRolesTaken}>Participate</button>
+                        <button style={allRolesTaken ? styles.dButton : styles.button} disabled={allRolesTaken}>Mentor</button>
                       </div>
+
                     </div>
                   </Col>
                 )

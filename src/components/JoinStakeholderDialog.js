@@ -38,8 +38,9 @@ class StakeholderDialog extends Component {
         title="Join as Stakeholder"
         actions={[
          <RaisedButton
+           backgroundColor='#38c098'
+           labelColor='#fff'
            label="Join"
-           primary={true}
            onClick={() => this.handleJoinMentor(this.props.pushKey)}
          />
         ]}

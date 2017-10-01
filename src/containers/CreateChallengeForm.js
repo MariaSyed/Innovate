@@ -163,7 +163,14 @@ class CreateChallengeForm extends Component {
           {items}
         </SelectField>
         <br />
-        <RaisedButton style={{ marginTop: 20 }} disabled={this.state.loading} label="Submit" primary={true} onClick={this.handleOnSubmit.bind(this)}/>
+        <RaisedButton
+          backgroundColor='#38c098'
+          labelColor='#fff'
+          style={{ marginTop: 20 }}
+          disabled={this.state.loading}
+          label="Submit"
+          onClick={this.handleOnSubmit.bind(this)}
+        />
         </Paper>
       </div>
     )
