@@ -81,7 +81,7 @@ class ChallengeDetailsContainer extends Component {
                       <i className="material-icons" style={{ fontSize: 16 }}>thumb_up</i> ( {challenge.votes} )
                     </button>
                     <button style={allRolesTaken ? bStyles.dButton : bStyles.button} disabled={allRolesTaken}>Participate</button>
-                    <button style={allRolesTaken ? bStyles.dButton : bStyles.button} disabled={allRolesTaken}>Mentor</button>
+                    <button style={bStyles.button}>Mentor</button>
                   </div>
                 </div>
             </Col>

@@ -37,9 +37,9 @@ class OrganiseContainer extends Component {
     const roleObj = this.getFilteredRoleObj()
     firebase.database().ref('/challenges/' + this.props.match.params.id + '/roles').update(roleObj).then(() => {
       if (Object.keys(roleObj).includes('role7')){
-        this.setState({ redirectTo: '/organise/'+ this.props.match.params.id + '/location' })
+        this.setState({ redirectTo: '/organise/' + this.props.match.params.id + '/location' })
       } else {
-        this.setState({ redirectTo: '/challenges' })
+        this.setState({ redirectTo: '/challenges/' + this.props.match.params.id })
       }
     })
   }

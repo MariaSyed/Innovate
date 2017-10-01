@@ -71,7 +71,7 @@ class About extends Component {
                         </button>
                         <button style={styles.button} onClick={() => this.handleOnVote(key, challenge.votes)}>Votes {challenge.votes}</button>
                         <button style={allRolesTaken ? styles.dButton : styles.button} disabled={allRolesTaken}>Participate</button>
-                        <button style={allRolesTaken ? styles.dButton : styles.button} disabled={allRolesTaken}>Mentor</button>
+                        <button style={styles.button}>Mentor</button>
                       </div>
 
                     </div>

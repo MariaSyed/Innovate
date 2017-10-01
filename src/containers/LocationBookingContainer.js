@@ -73,7 +73,7 @@ class LocationBookingContainer extends Component {
   render() {
     return (
       <div>
-        <NavBar title='Book a Space'/>
+        <NavBar title='Location Planning: Book a Space'/>
         <Paper style={{ width: '40%', marginLeft: 'auto', marginRight: 'auto', padding: 20, paddingTop: 50,  marginTop: 50 }}>
             <SelectField
               style={styles.centerField}
