@@ -17,6 +17,7 @@ const items = [
   <MenuItem key={3} value={'ed-tech'} primaryText="Ed-Tech" />,
   <MenuItem key={4} value={'art'} primaryText="Art" />,
   <MenuItem key={4} value={'environment'} primaryText="Environment" />,
+  <MenuItem key={4} value={'transport'} primaryText="Transport" />,
   <MenuItem key={4} value={'social'} primaryText="Social" />,
   <MenuItem key={4} value={'other'} primaryText="Other" />,
 ]
@@ -63,11 +64,12 @@ class CreateChallengeForm extends Component {
   state = {
     redirect: false,
     loading: false,
-    name: '',
-    email: '',
-    title: '',
-    description: '',
-    category: null
+    name: 'Eeva-liisa Nieminen',
+    email: 'eeva.liisa@gmail.com',
+    title: 'Easy transportation systems',
+    description: 'The city of tuusula recently shut down a train station which puts a strain on us to travel further by foot or bike.' +
+    'We would need a community system which we can use to as a community to travel faster and easier.',
+    category: 'transport'
   }
 
   handleCategoryChange = (event, index, value) => this.setState({ category: value })
@@ -123,7 +125,7 @@ class CreateChallengeForm extends Component {
           this.state.loading &&
           <LinearProgress mode="indeterminate"/>
         }
-        {/* <p style={{ fontFamily: 'Raleway', fontSize: 25, fontWeight: '500'}}>Create a Challenge</p> */}
+        {/* <p style={{ fontFamily: 'Muli', fontSize: 25, fontWeight: '500'}}>Create a Challenge</p> */}
         <TextField
           style={{ marginTop: 10, width: '60%' }}
           hintText="Name"

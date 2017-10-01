@@ -33,9 +33,9 @@ for (let i = 5; i < 100; i++ ) {
 
 class LocationBookingContainer extends Component {
   state = {
-    roomTypes: [],
-    equipments: [],
-    numberOfParticipants: 10,
+    roomTypes: ['Small classroom', 'Large auditorium', 'Meeting room'],
+    equipments: ['Projector', 'Desks & Chairs', 'Whiteboard'],
+    numberOfParticipants: 80,
     minDate: minDate,
     maxDate: maxDate
   }

@@ -56,7 +56,7 @@ class Home extends Component {
                   <button onClick={() => this.setState({ redirectTo: '/challenges' })} style={Object.assign({}, styles.phaseButton, { color: '#000' })}>Organize</button>
                 </div>
               </Col>
-              <Col md={4} style={{ width: '100%', paddingTop: 100, height: '65vh', backgroundColor: 'white' }}>
+              <Col md={4} style={{ width: '100%', paddingTop: 100, height: '65vh', backgroundColor: '#f9f907' }}>
                 <p style={Object.assign({},styles.phaseTitle, { color: 'black'})}>PHASE 3</p>
                 <p style={Object.assign({},styles.phaseSubTitle, { color: 'black'})}>Implement your Solution</p>
                 <div style={styles.phaseButtonContainer}>
@@ -87,7 +87,7 @@ const styles = {
     paddingBottom: 70,
     backgroundColor: 'white',
     textAlign: 'center',
-    fontFamily: 'Avenir',
+    fontFamily: 'Muli',
   },
   mainHeading: {
     fontSize: 80,
@@ -106,7 +106,7 @@ const styles = {
   },
   leftText: {
     fontSize: 80,
-    fontFamily: 'Avenir',
+    fontFamily: 'Muli',
     color: 'black',
     margin: 0,
     fontWeight: '700',
@@ -129,12 +129,12 @@ const styles = {
     fontSize: 60,
     letterSpacing: 10,
     fontWeight: '900',
-    fontFamily: 'Avenir',
+    fontFamily: 'Muli',
     textAlign: 'center'
   },
   rightText: {
     color: 'white',
-    fontFamily: 'Avenir',
+    fontFamily: 'Muli',
     fontSize: 18,
     textAlign: 'center',
     paddingBottom: 10
@@ -160,7 +160,7 @@ const styles = {
     width: 180
   },
   phaseTitle: {
-    fontFamily: 'Avenir',
+    fontFamily: 'Muli',
     letterSpacing: 8,
     fontSize: 50,
     fontWeight: '600',
@@ -168,7 +168,7 @@ const styles = {
     textAlign: 'center'
   },
   phaseSubTitle: {
-    fontFamily: 'Avenir',
+    fontFamily: 'Muli',
     fontSize: 25,
     fontWeight: '400',
     color: 'white',
@@ -184,7 +184,7 @@ const styles = {
     paddingTop: 20,
     paddingBottom: 20,
     color: 'white',
-    fontFamily: 'Avenir',
+    fontFamily: 'Muli',
     border:'1px solid transparent',
     cursor: 'pointer',
     marginTop: 20,

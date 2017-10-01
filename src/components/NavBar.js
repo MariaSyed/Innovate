@@ -29,14 +29,14 @@ const styles = {
   },
   title: {
     fontSize: 30,
-    fontFamily: 'Raleway',
+    fontFamily: 'Muli',
     fontWeight: '800',
     color: '#42484f'
   },
   pageTitle: {
     color: 'white',
     fontSize: 55,
-    fontFamily: 'Raleway',
+    fontFamily: 'Muli',
     paddingTop: 30,
     paddingBottom: 30
   },
@@ -50,7 +50,7 @@ const styles = {
     color: 'white',
     paddingLeft: 50,
     textAlign: 'center',
-    fontFamily: 'Raleway',
+    fontFamily: 'Muli',
     textDecoration: 'none',
     fontSize: 18
   }

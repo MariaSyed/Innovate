@@ -8,12 +8,28 @@ import bStyles from '../styles/ChallengesContainerStyles'
 
 // this.props.match.params.id is the push key from firebase
 
+const mentors = [
+  {
+    name: 'Sana Koskinen',
+    expertise: 'Head of Game Jams'
+  },
+  {
+    name: 'Jyri Kyllianen',
+    expertise: 'Student Union Chairperson'
+  },
+  {
+    name: 'Annika Jorvinen',
+    expertise: 'School Principal'
+  }
+]
+
 class ChallengeDetailsContainer extends Component {
   state = {
     challenge: {},
     show: null,
     openDialog: false,
-    redirectTo: null
+    redirectTo: null,
+    tab: 'organizers'
   }
 
   componentWillMount() {
@@ -90,12 +106,14 @@ class ChallengeDetailsContainer extends Component {
             <Col md={4} style={{ backgroundColor: 'black' }}>
               <div>
                 <p style={styles.bottomTitle}>STAKEHOLDERS</p>
+                <p style={styles.bottomSubtitle}><i>People who could benefit from solutions to this challenge</i></p>
+
                 {
                   challenge.stakeholders
                     ?
                       Object.values(challenge.stakeholders).map((stakeholder) => (
                         <div>
-                          <p id={stakeholder.id} style={{ fontFamily: 'Avenir', fontSize: 20,color: 'white', textAlign: 'center' }}>
+                          <p id={stakeholder.id} style={{ fontFamily: 'Muli', fontSize: 20,color: 'white', textAlign: 'center' }}>
                             <i id={stakeholder.id} style={{ fontSize: 40, color: 'white', paddingRight: 20 }} className="material-icons">account_circle</i>
                             {stakeholder.name}
                             {
@@ -105,11 +123,11 @@ class ChallengeDetailsContainer extends Component {
                               </a>
                             }
                           </p>
-                          <p style={{ fontFamily: 'Avenir', fontStyle: 'italic', fontSize: 17, color: 'white', textAlign: 'center'}}>{stakeholder.comments}</p>
+                          <p style={{ fontFamily: 'Muli', fontStyle: 'italic', fontSize: 17, color: 'white', textAlign: 'center'}}>{stakeholder.comments}</p>
                         </div>
                       ))
 
-                    : <p style={{ fontFamily: 'Avenir', fontSize: 20,color: 'white', textAlign: 'center' }}>None yet :( Join!</p>
+                    : <p style={{ fontFamily: 'Muli', fontSize: 20,color: 'white', textAlign: 'center' }}>None yet :( Join!</p>
                 }
                 <div style={{ width: '60%', marginLeft: 'auto', marginRight: 'auto' }}>
                   <button onClick={() => this.handleOpenDialog()} style={styles.stakeholderButton}>Join as a stakeholder</button>
@@ -122,28 +140,36 @@ class ChallengeDetailsContainer extends Component {
                 <div style={{ width: 100, marginLeft:'auto', marginRight: 'auto'}} >
                   <i style={{ textAlign: 'center', fontSize: 100, color: 'rgb(156,208,202)' }} className="material-icons">lightbulb_outline</i>
                 </div>
-                <p style={{ fontSize: 30, fontFamily: 'Avenir', letterSpacing: 5, textAlign: 'center', color: 'white'}}>{challenge.category && challenge.category.toUpperCase()}</p>
+                <p style={{ fontSize: 30, fontFamily: 'Muli', letterSpacing: 5, textAlign: 'center', color: 'white'}}>{challenge.category && challenge.category.toUpperCase()}</p>
               </div>
             </Col>
-            <Col md={4} style={{ backgroundColor: '#38c098' }}>
+            <Col md={4} style={{ backgroundColor: '#38c098', paddingTop: 40, minHeight: 600 }}>
               <div>
-                <p style={styles.tellUsTitle}>Organizers</p>
+                <div style={styles.tellUsContainer}>
+                  <span style={Object.assign({}, styles.tellUsTitle, this.state.tab === 'organizers' ? styles.tellUsSelected : {})} onClick={() => this.setState({tab: 'organizers'})}>ORGANIZERS</span>
+                  <span style={Object.assign({}, styles.tellUsTitle, this.state.tab === 'mentors' ? styles.tellUsSelected : {})} onClick={() => this.setState({tab: 'mentors'})}>MENTORS</span>
+                </div>
                 <div style={styles.organizerContainer}>
                 {
-                  challenge.roles &&
-                    Object.values(challenge.roles).map((role) => {
-                      return (
-                        <p key={role.id} style={styles.organizers}>
-                          <span style={{ fontSize: 20 }}><strong>{role.title}</strong></span>  -
-                          {
-                            role.organiser
-                              ? '  ' + role.organiser.name + ' , ' + role.organiser.email
-                              : <i>   None yet, <Link to={'/organise/' + this.props.match.params.id}>organise!</Link></i>
-                          }
+                  this.state.tab === 'organizers'
+                    ? challenge.roles &&
+                        Object.values(challenge.roles).map((role) => {
+                          return (
+                            <p key={role.id} style={styles.organizers}>
+                              <span style={{ fontSize: 20 }}><strong>{role.title}</strong></span>  -
+                              {
+                                role.organiser
+                                  ? '  ' + role.organiser.name + ' , ' + role.organiser.email
+                                  : <i>   None yet, <Link to={'/organise/' + this.props.match.params.id}>organise!</Link></i>
+                              }
+                            </p>
+                          )
+                        })
+                    : mentors.map((mentor, i) => (
+                        <p key={i} style={styles.organizers}>
+                          <span style={{ fontSize: 20 }}><strong>{mentor.name}</strong></span>  - {mentor.expertise}
                         </p>
-                      )
-
-                    })
+                    ))
                 }
               </div>
               </div>
@@ -175,7 +201,7 @@ const styles = {
   descriptionText: {
     color: 'white',
     fontStyle: 'italic',
-    fontFamily: 'Avenir',
+    fontFamily: 'Muli',
     fontWeight: '300',
     width: '50%',
     textAlign: 'center',
@@ -190,16 +216,33 @@ const styles = {
     fontSize: 30,
     letterSpacing: 3,
     fontWeight: '900',
-    fontFamily: 'Avenir',
+    fontFamily: 'Muli',
     color: '#38c098'
+  },
+  bottomSubtitle: {
+    fontFamily: 'Muli',
+    marginTop: 10,
+    fontSize: 14,
+    textAlign: 'center',
+    color :'white',
+    marginBottom: 30
   },
   tellUsTitle: {
     textAlign: 'center',
     fontSize: 30,
     letterSpacing: 3,
     fontWeight: '900',
-    fontFamily: 'Avenir',
-    color: 'black'
+    fontFamily: 'Muli',
+    color: 'black',
+    paddingLeft: 25,
+    cursor: 'pointer'
+  },
+  tellUsSelected: {
+    color: 'white'
+  },
+  tellUsContainer: {
+    textAlign: 'center',
+    width: '100%',
   },
   stakeholderButton: {
     fontSize: 18,
@@ -211,7 +254,7 @@ const styles = {
     paddingTop: 20,
     paddingBottom: 20,
     color: 'white',
-    fontFamily: 'Avenir',
+    fontFamily: 'Muli',
     border:'1px solid transparent',
     cursor: 'pointer',
     marginTop: 20,
@@ -219,12 +262,14 @@ const styles = {
     marginBottom: 20
   },
   organizers: {
-    fontFamily: 'Avenir',
+    fontFamily: 'Muli',
     color: 'white',
-    fontSize: 18
+    fontSize: 18,
+    textAlign: 'center',
   },
   organizerContainer: {
-    paddingLeft: 100,
+    paddingLeft: 50,
+    paddingRight: 50,
     paddingTop: 5
   }
 }

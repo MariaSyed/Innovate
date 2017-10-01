@@ -11,8 +11,8 @@ import Paper from 'material-ui/Paper'
 
 class OrganiseContainer extends Component {
   state = {
-    name: '',
-    email: '',
+    name: 'Zuena Mgiva',
+    email: 'zuena.mgiva@gmail.com',
     rolesChecked: {},
     roles: [],
     redirectTo: null
@@ -39,7 +39,7 @@ class OrganiseContainer extends Component {
       if (Object.keys(roleObj).includes('role7')){
         this.setState({ redirectTo: '/organise/' + this.props.match.params.id + '/location' })
       } else {
-        this.setState({ redirectTo: '/challenges/' + this.props.match.params.id })
+        this.setState({ redirectTo: '/challenge/' + this.props.match.params.id })
       }
     })
   }
@@ -85,7 +85,7 @@ class OrganiseContainer extends Component {
           onChange={this.handleOnTextChange.bind(this)}
           name="email"
         /><br />
-        <h2 style={{ fontFamily: 'Avenir' }}>Available Organiser Roles</h2>
+        <h2 style={{ fontFamily: 'Muli' }}>Available Organiser Roles</h2>
         {
           Object.values(this.state.roles).map((role, index) => {
             if (!role.organiser) {
