@@ -104,7 +104,6 @@ class ChallengeDetailsContainer extends Component {
           </Row>
           <Row className="show-grid">
             <Col md={4} style={{ backgroundColor: 'black', width: '100%' }}>
-              <div>
                 <p style={styles.bottomTitle}>STAKEHOLDERS</p>
                 <p style={styles.bottomSubtitle}><i>People who could benefit from solutions to this challenge</i></p>
 
@@ -132,18 +131,15 @@ class ChallengeDetailsContainer extends Component {
                 <div style={{ width: '60%', marginLeft: 'auto', marginRight: 'auto' }}>
                   <button onClick={() => this.handleOpenDialog()} style={styles.stakeholderButton}>Join as a stakeholder</button>
                 </div>
-              </div>
             </Col>
             <Col md={4} style={{ backgroundColor: '#5e636d', width: '100%' }}>
-              <div>
                 <p style={styles.bottomTitle}>SECTOR</p>
                 <div style={{ width: 100, marginLeft:'auto', marginRight: 'auto'}} >
                   <i style={{ textAlign: 'center', fontSize: 100, color: 'rgb(156,208,202)' }} className="material-icons">lightbulb_outline</i>
                 </div>
                 <p style={{ fontSize: 30, fontFamily: 'Muli', letterSpacing: 5, textAlign: 'center', color: 'white'}}>{challenge.category && challenge.category.toUpperCase()}</p>
-              </div>
             </Col>
-            <Col md={4} style={{ backgroundColor: '#38c098', paddingTop: 40, minHeight: 600 }}>
+            <Col md={4} style={{ backgroundColor: '#38c098', width: '100%', paddingTop: 40, minHeight: 600 }}>
               <div>
                 <div style={styles.tellUsContainer}>
                   <span style={Object.assign({}, styles.tellUsTitle, this.state.tab === 'organizers' ? styles.tellUsSelected : {})} onClick={() => this.setState({tab: 'organizers'})}>ORGANIZERS</span>
